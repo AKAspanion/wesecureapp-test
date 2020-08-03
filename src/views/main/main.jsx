@@ -2,7 +2,14 @@ import React from "react";
 
 import { Link } from "carbon-components-react";
 
-export default function MainView({ title, subtitle, linkText, page }) {
+export default function MainView({
+  page,
+  title,
+  linkKey,
+  subtitle,
+  linkText,
+  onLinkClick,
+}) {
   return (
     <div className="main-view">
       <div className="main-panel">
@@ -28,7 +35,10 @@ export default function MainView({ title, subtitle, linkText, page }) {
           {title && <div className="title__label">{title}</div>}
           {subtitle && (
             <div className="title__link">
-              {subtitle} {linkText && <Link>{linkText}</Link>}
+              {subtitle}{" "}
+              {linkText && (
+                <Link onClick={(e) => onLinkClick(e, linkKey)}>{linkText}</Link>
+              )}
             </div>
           )}
         </div>
