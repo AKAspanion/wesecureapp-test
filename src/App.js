@@ -1,11 +1,12 @@
 import React from "react";
 
 import { MainView } from "./views/";
+import { Registration } from "./pages/";
 
 function App() {
   return (
     <div className="App">
-      <MainView />
+      <MainView page={<Registration />} />
     </div>
   );
 }

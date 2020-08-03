@@ -23,6 +23,9 @@ export default function MainView({ page }) {
       <div className="main-content">
         <div className="content-headline">strobes</div>
         {page && <div className="content-container">{page}</div>}
+        <div className="content-copyright">
+          © Copyright Strobes 2020. All Rights Reserved.
+        </div>
       </div>
     </div>
   );
