@@ -1,9 +1,9 @@
 import React from "react";
 
 import {
-  Dropdown,
   FluidForm,
   TextInput,
+  Dropdown,
   Column,
   Button,
   Grid,
@@ -12,8 +12,9 @@ import {
 import { ArrowRight16 } from "@carbon/icons-react";
 
 import { useForm } from "../../hooks/";
+import { saveUser } from "../../services/";
 
-export default function Registration() {
+export default function Registration({ onNotify }) {
   const emailRule = (v) => !!v || "Provide valid email";
   const noEmpty = (v) => !!v || "This field is required";
 
@@ -32,8 +33,26 @@ export default function Registration() {
       lastName: noEmpty,
       firstName: noEmpty,
     },
-    (values) => console.log(values)
+    async ({ values, errors }) => {
+      try {
+        if (validate(errors)) {
+          const data = await saveUser(values);
+          onNotify({ kind: "success", title: data.message });
+        } else {
+          onNotify({ kind: "error", title: "Please fill the form" });
+        }
+      } catch (err) {
+        onNotify({ kind: "error", title: err.message });
+      }
+    }
   );
+
+  const validate = ({ email, company, password, lastName, firstName }) =>
+    email === false &&
+    company === false &&
+    password === false &&
+    lastName === false &&
+    firstName === false;
 
   const inputProps = {
     onBlur: handleBlur,
@@ -45,6 +64,7 @@ export default function Registration() {
     { id: "option-2", label: "Female" },
     { id: "option-3", label: "Transgender" },
   ];
+
   return (
     <Grid className="px-0">
       <FluidForm onSubmit={handleSubmit}>
@@ -63,6 +83,7 @@ export default function Registration() {
           </Column>
           <Column className="py-2">
             <TextInput
+              id="lastName"
               {...inputProps}
               name="lastName"
               placeholder="Doe"
@@ -76,8 +97,9 @@ export default function Registration() {
         <Row>
           <Column className="py-2">
             <TextInput
-              {...inputProps}
+              id="company"
               name="company"
+              {...inputProps}
               labelText="Company"
               value={values.company}
               invalid={!!errors.company}
@@ -87,10 +109,10 @@ export default function Registration() {
           </Column>
           <Column className="py-2">
             <Dropdown
-              {...inputProps}
               name="gender"
               items={items}
               label="select"
+              {...inputProps}
               titleText="I am a"
               id="gender-dropdown"
               selectedItem={values.gender}
@@ -100,8 +122,9 @@ export default function Registration() {
         <Row>
           <Column className="py-2">
             <TextInput
-              {...inputProps}
+              id="email"
               name="email"
+              {...inputProps}
               labelText="Email"
               value={values.email}
               invalid={!!errors.email}
@@ -111,6 +134,7 @@ export default function Registration() {
           </Column>
           <Column className="py-2">
             <TextInput
+              id="password"
               {...inputProps}
               name="password"
               type="password"
@@ -122,7 +146,11 @@ export default function Registration() {
             />
           </Column>
         </Row>
-        <Button type="submit" className="submit-button">
+        <Button
+          type="submit"
+          className="submit-button"
+          disabled={!validate(errors)}
+        >
           Continue to your free account
           <ArrowRight16 />
         </Button>

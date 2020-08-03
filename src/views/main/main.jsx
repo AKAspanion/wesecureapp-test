@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Link } from "carbon-components-react";
+import { Link, InlineNotification } from "carbon-components-react";
 
 export default function MainView({
   page,
@@ -9,6 +9,8 @@ export default function MainView({
   subtitle,
   linkText,
   onLinkClick,
+  notification,
+  onNotifyClose,
 }) {
   return (
     <div className="main-view">
@@ -41,6 +43,7 @@ export default function MainView({
               )}
             </div>
           )}
+          {notification && <InlineNotification {...notification} onCloseButtonClick={onNotifyClose}/>}
         </div>
         {page && <div className="content-container">{page}</div>}
         <div className="content-copyright">

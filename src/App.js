@@ -4,6 +4,7 @@ import { MainView } from "./views/";
 import { Login, Registration } from "./pages/";
 
 function App() {
+  const [notification, setNotification] = useState(null);
   const [activePage, setActivePage] = useState("Register");
 
   const pages = [
@@ -11,14 +12,14 @@ function App() {
       title: "Register",
       linkKey: "Log in",
       linkText: "Log in",
-      page: <Registration />,
+      page: <Registration onNotify={setNotification} />,
       subtitle: "Already have an account?",
     },
     {
       title: "Log in",
       linkKey: "Register",
       linkText: "Register now",
-      page: <Login />,
+      page: <Login onNotify={setNotification} />,
       subtitle: "Don’t have an account?",
     },
   ];
@@ -34,7 +35,12 @@ function App() {
 
   return (
     <div className="App">
-      <MainView {...currentMainView()} onLinkClick={handleLinkClick} />
+      <MainView
+        {...currentMainView()}
+        notification={notification}
+        onLinkClick={handleLinkClick}
+        onNotifyClose={() => setNotification(null)}
+      />
     </div>
   );
 }

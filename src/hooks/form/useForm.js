@@ -37,7 +37,7 @@ export default function useForm(initial, rules, onSubmit) {
       setValues({ ...values, [name]: value });
     }
     if (selectedItem) {
-      setValues({ ...values, ["gender"]: selectedItem });
+      setValues({ ...values, gender: selectedItem });
     }
   });
 
@@ -46,7 +46,7 @@ export default function useForm(initial, rules, onSubmit) {
 
     event.preventDefault();
 
-    onSubmit(values);
+    onSubmit({ values, errors });
   });
 
   return [values, errors, handleBlur, handleChange, handleSubmit];
