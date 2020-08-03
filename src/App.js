@@ -1,11 +1,11 @@
 import React from "react";
 
-import { Button } from "carbon-components-react";
+import { MainView } from "./views/";
 
 function App() {
   return (
     <div className="App">
-      <Button />
+      <MainView />
     </div>
   );
 }
