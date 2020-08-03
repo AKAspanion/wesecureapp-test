@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Link, InlineNotification } from "carbon-components-react";
+import { Link, ToastNotification } from "carbon-components-react";
 
 export default function MainView({
   page,
@@ -43,7 +43,14 @@ export default function MainView({
               )}
             </div>
           )}
-          {notification && <InlineNotification {...notification} onCloseButtonClick={onNotifyClose}/>}
+          {notification && (
+            <ToastNotification
+              caption=""
+              lowContrast
+              {...notification}
+              onCloseButtonClick={onNotifyClose}
+            />
+          )}
         </div>
         {page && <div className="content-container">{page}</div>}
         <div className="content-copyright">

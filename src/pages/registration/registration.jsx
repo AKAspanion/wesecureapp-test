@@ -146,11 +146,7 @@ export default function Registration({ onNotify }) {
             />
           </Column>
         </Row>
-        <Button
-          type="submit"
-          className="submit-button"
-          disabled={!validate(errors)}
-        >
+        <Button type="submit" className="submit-button register-submit">
           Continue to your free account
           <ArrowRight16 />
         </Button>

@@ -5,7 +5,7 @@ import { Login, Registration } from "./pages/";
 
 function App() {
   const [notification, setNotification] = useState(null);
-  const [activePage, setActivePage] = useState("Register");
+  const [activePage, setActivePage] = useState("Log in");
 
   const pages = [
     {
@@ -19,13 +19,17 @@ function App() {
       title: "Log in",
       linkKey: "Register",
       linkText: "Register now",
-      page: <Login onNotify={setNotification} />,
+      page: (
+        <Login
+          onNotify={setNotification}
+          onForgotPass={() => setActivePage("Forgot Password")}
+        />
+      ),
       subtitle: "Don’t have an account?",
     },
   ];
 
   function handleLinkClick(e, title) {
-    console.log(e, title);
     setActivePage(title);
   }
 
