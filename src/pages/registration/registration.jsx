@@ -6,7 +6,6 @@ import {
   TextInput,
   Column,
   Button,
-  Link,
   Grid,
   Row,
 } from "carbon-components-react";
@@ -29,12 +28,6 @@ export default function Registration() {
   ];
   return (
     <Grid className="px-0">
-      <div className="register-title">
-        <div className="title__label">Register</div>
-        <div className="title__link">
-          Already have an account? <Link>Log in</Link>
-        </div>
-      </div>
       <FluidForm>
         <Row>
           <Column className="py-2">

@@ -6,7 +6,12 @@ import { Registration } from "./pages/";
 function App() {
   return (
     <div className="App">
-      <MainView page={<Registration />} />
+      <MainView
+        title="Register"
+        linkText="Log in"
+        page={<Registration />}
+        subtitle="Already have an account?"
+      />
     </div>
   );
 }

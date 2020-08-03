@@ -121,8 +121,25 @@ code {
 }
 
 .content-container {
-  margin: 72px 0px;
+  margin-bottom: 72px;
   padding-bottom: 32px;
+}
+
+.content-title {
+  margin: 72px 0px 56px 0px;
+}
+.title__label {
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 40px;
+  color: var(--text-light);
+}
+.title__link {
+  font-size: 14px;
+  margin-top: 4px;
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--text-light);
 }
 
 .content-copyright {
@@ -154,22 +171,6 @@ code {
   color: var(--text-light-secondary);
 }
 
-.register-title {
-  margin-bottom: 56px;
-}
-.title__label {
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 40px;
-  color: var(--text-light);
-}
-.title__link {
-  font-size: 14px;
-  margin-top: 4px;
-  font-weight: 400;
-  line-height: 18px;
-  color: var(--text-light);
-}
 /* overrides */
 #gender-dropdown {
   height: 64px !important;

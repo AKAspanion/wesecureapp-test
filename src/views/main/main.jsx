@@ -1,6 +1,8 @@
 import React from "react";
 
-export default function MainView({ page }) {
+import { Link } from "carbon-components-react";
+
+export default function MainView({ title, subtitle, linkText, page }) {
   return (
     <div className="main-view">
       <div className="main-panel">
@@ -22,6 +24,14 @@ export default function MainView({ page }) {
       </div>
       <div className="main-content">
         <div className="content-headline">strobes</div>
+        <div className="content-title">
+          {title && <div className="title__label">{title}</div>}
+          {subtitle && (
+            <div className="title__link">
+              {subtitle} {linkText && <Link>{linkText}</Link>}
+            </div>
+          )}
+        </div>
         {page && <div className="content-container">{page}</div>}
         <div className="content-copyright">
           © Copyright Strobes 2020. All Rights Reserved.
