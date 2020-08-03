@@ -16,13 +16,24 @@ function App() {
       subtitle: "Already have an account?",
     },
     {
+      title: "Trouble logging in?",
+      page: (
+        <Login
+          forgot
+          onNotify={setNotification}
+          changeView={(v) => setActivePage(v)}
+        />
+      ),
+      subtitle: "Reset your account password.",
+    },
+    {
       title: "Log in",
       linkKey: "Register",
       linkText: "Register now",
       page: (
         <Login
           onNotify={setNotification}
-          onForgotPass={() => setActivePage("Forgot Password")}
+          changeView={(v) => setActivePage(v)}
         />
       ),
       subtitle: "Don’t have an account?",

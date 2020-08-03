@@ -13,9 +13,9 @@ import {
 import { ArrowRight16, ArrowLeft16 } from "@carbon/icons-react";
 
 import { useForm } from "../../hooks/";
-import { loginUser } from "../../services/";
+import { loginUser, updateUser } from "../../services/";
 
-export default function Login({ onNotify, onForgotPass }) {
+export default function Login({ forgot, onNotify, changeView }) {
   const [view, setView] = useState("email");
   const [savedEmail, setSavedEmail] = useState("");
   const [values, errors, handleBlur, handleChange, handleSubmit] = useForm(
@@ -24,7 +24,12 @@ export default function Login({ onNotify, onForgotPass }) {
     async ({ values, errors: { password } }) => {
       try {
         if (validate(password)) {
-          const data = await loginUser(savedEmail, values.password);
+          let data;
+          if (forgot) {
+            data = await updateUser(savedEmail, values.password);
+          } else {
+            data = await loginUser(savedEmail, values.password);
+          }
           onNotify({ kind: "success", title: data.message });
         } else {
           onNotify({ kind: "error", title: "Please fill the form" });
@@ -37,14 +42,17 @@ export default function Login({ onNotify, onForgotPass }) {
 
   function handleEmailSubmit() {
     if (validate(errors.email)) {
-      onNotify({ kind: "success", title: "Email id vaild" });
       setView("pass");
       setSavedEmail(values.email);
     } else {
       onNotify({ kind: "error", title: "Please enter a valid email" });
-      setView("email");
-      setSavedEmail("");
+      resetState();
     }
+  }
+
+  function resetState() {
+    setView("email");
+    setSavedEmail("");
   }
 
   const validate = (email) => email === false;
@@ -52,19 +60,35 @@ export default function Login({ onNotify, onForgotPass }) {
   const bottomJSX = () => {
     return (
       <Fragment>
-        <Row className="py-2 my-2" style={{ alignItems: "center" }}>
-          <Column>
-            <Checkbox labelText="Remember me" id="remeber-check" />
-          </Column>
-          <Column style={{ textAlign: "right" }}>
-            <Link className="my-2" onClick={() => onForgotPass()}>
-              Forgot Password
-            </Link>
-          </Column>
-        </Row>
+        {!forgot && (
+          <Row className="py-2 my-2" style={{ alignItems: "center" }}>
+            <Column>
+              <Checkbox labelText="Remember me" id="remeber-check" />
+            </Column>
+            <Column style={{ textAlign: "right" }}>
+              <Link
+                className="my-2"
+                onClick={() => {
+                  resetState();
+                  changeView("Trouble logging in?");
+                }}
+              >
+                Forgot Password
+              </Link>
+            </Column>
+          </Row>
+        )}
         <Row className="py-2 my-2">
           <Column>
-            <Link className="my-2">Alternative Login</Link>
+            <Link
+              className="my-2"
+              onClick={() => {
+                resetState();
+                changeView("Log in");
+              }}
+            >
+              {forgot ? "Go back to Log in" : "Alternative Login"}
+            </Link>
           </Column>
         </Row>
       </Fragment>
@@ -104,12 +128,14 @@ export default function Login({ onNotify, onForgotPass }) {
           <Row>
             <Column sm={12} md={6}>
               <div className="login-title">
-                <ArrowLeft16
-                  color="#0F62FE"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setView("email")}
-                />
-                <div style={{ paddingLeft: "8px" }}>{savedEmail}</div>
+                {!forgot && (
+                  <ArrowLeft16
+                    color="#0F62FE"
+                    onClick={() => setView("email")}
+                    style={{ cursor: "pointer", marginRight: "8px" }}
+                  />
+                )}
+                <div>{`${forgot ? "New password for " : ""}${savedEmail}`}</div>
               </div>
               <TextInput
                 id="password"
